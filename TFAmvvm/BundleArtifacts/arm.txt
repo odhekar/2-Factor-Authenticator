@@ -1,0 +1,7 @@
+MainPackage=D:\Automation\repos\TFAmvvm\TFAmvvm\bin\ARM\Release\TFAmvvm_2.4.1609.0_ARM.appx
+SymbolPackage=D:\Automation\repos\TFAmvvm\TFAmvvm\AppPackages\TFAmvvm_2.4.1609.0_Test\TFAmvvm_2.4.1609.0_ARM.appxsym
+ResourcePack=D:\Automation\repos\TFAmvvm\TFAmvvm\bin\ARM\Release\TFAmvvm_2.4.1609.0_language-mr.appx
+ResourcePack=D:\Automation\repos\TFAmvvm\TFAmvvm\bin\ARM\Release\TFAmvvm_2.4.1609.0_scale-100.appx
+ResourcePack=D:\Automation\repos\TFAmvvm\TFAmvvm\bin\ARM\Release\TFAmvvm_2.4.1609.0_scale-125.appx
+ResourcePack=D:\Automation\repos\TFAmvvm\TFAmvvm\bin\ARM\Release\TFAmvvm_2.4.1609.0_scale-150.appx
+ResourcePack=D:\Automation\repos\TFAmvvm\TFAmvvm\bin\ARM\Release\TFAmvvm_2.4.1609.0_scale-400.appx

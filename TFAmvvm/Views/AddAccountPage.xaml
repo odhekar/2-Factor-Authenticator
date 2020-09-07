@@ -1,0 +1,82 @@
+﻿<Page
+    x:Class="TFAmvvm.Views.AddAccountPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TFAmvvm.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:TFAmvvm.ViewModels"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:AddAccountPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <DrillInNavigationTransitionInfo />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="AddAccountTitle"
+                   x:Uid="AddAccountTitle"
+                   Style="{StaticResource PageTitleTextBox}"
+                   Grid.Row="0"
+                   Margin="12,0,0,12"
+                   HorizontalAlignment="Left" />
+        <TextBox x:Name="NameTextBox"
+                 x:Uid="NameTextBox"
+                 Grid.Row="1"
+                 Margin="12,0,0,12"
+                 Width="260"
+                 FontSize="16"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Text="{x:Bind ViewModel.Name, Mode=TwoWay}">
+            <TextBox.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition />
+                </TransitionCollection>
+            </TextBox.Transitions>
+        </TextBox>
+        <TextBox x:Name="SecretKeyTextBox"
+                 x:Uid="SecretKeyTextBox"
+                 Grid.Row="2"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="{x:Bind NameTextBox.Margin, Mode=OneWay}"
+                 Width="{x:Bind NameTextBox.Width, Mode=OneWay}"
+                 FontSize="{x:Bind NameTextBox.FontSize, Mode=OneWay}"
+                 Header="{x:Bind ViewModel.HeaderMessage, Mode=OneWay}"
+                 Text="{x:Bind ViewModel.SecretKey, Mode=TwoWay}">
+            <TextBox.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition />
+                </TransitionCollection>
+            </TextBox.Transitions>
+        </TextBox>
+        <CommandBar x:Name="MainCommandBar" Grid.Row="3">
+            <AppBarButton x:Name="CameraButton"
+                          x:Uid="CameraButton"
+                          Icon="Camera"
+                          Command="{x:Bind ViewModel.CameraCommand}"/>
+            <AppBarButton x:Name="SaveButton"
+                          x:Uid="SaveButton"
+                          Icon="Save"
+                          Command="{x:Bind ViewModel.SaveCommand, Mode=OneWay}" />
+            <AppBarButton x:Name="CancelButton"
+                          x:Uid="CancelButton"
+                          Icon="Cancel"
+                          Command="{x:Bind ViewModel.CancelCommand}"/>
+        </CommandBar>
+    </Grid>
+</Page>

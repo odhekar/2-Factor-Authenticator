@@ -1,0 +1,170 @@
+<Page
+    x:Class="TFAmvvm.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:controls="using:Template10.Controls"
+    xmlns:conv="using:TFAmvvm.Converters"
+    xmlns:ctrls="using:TFAmvvm.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:data="using:TFAmvvm.Models"
+    xmlns:local="using:TFAmvvm.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:TFAmvvm.ViewModels"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <conv:NoneToVisibleConverter x:Key="NoneToVisible" />
+        <conv:NoneToCollapsedConverter x:Key="NoneToCollapsed" />
+        <Storyboard x:Name="HidePopup">
+            <PopOutThemeAnimation Storyboard.TargetName="PopupHints" />
+        </Storyboard>
+    </Page.Resources>
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <ContinuumNavigationTransitionInfo />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+    <Page.DataContext>
+        <vm:MainPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Grid x:Name="MainGrid" >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            x:Name="AccountsTitle"
+            x:Uid="AccountsTitle"
+            Grid.Row="0"
+            Margin="12,0"
+            Style="{StaticResource PageTitleTextBox}" />
+        <ProgressBar
+            x:Name="Interval"
+            x:Uid="Interval"
+            Grid.Row="1"
+            Height="8"
+            Width="296"
+            HorizontalAlignment="Left"
+            Maximum="30"
+            Margin="12,4,12,12"
+            Value="{x:Bind ViewModel.NumberOfSecondsLeft, Mode=OneWay}" >
+            <ProgressBar.Transitions>
+                <TransitionCollection>
+                    <ContentThemeTransition />
+                </TransitionCollection>
+            </ProgressBar.Transitions>
+        </ProgressBar>
+        <GridView
+            x:Name="TwoFactorGrid"
+            x:Uid="TwoFactorGrid"
+            Grid.Row="2"
+            Margin="{x:Bind Interval.Margin, Mode=OneWay}"
+            ItemsSource="{x:Bind ViewModel.AccountsCollection}"
+            IsItemClickEnabled="True"
+            ItemClick="{x:Bind ViewModel.ItemClick}"
+            SelectionChanged="{x:Bind ViewModel.SelectionChanged}"
+            SelectionMode="{x:Bind ViewModel.SelectionMode, Mode=OneWay}" >
+            <GridView.Transitions>
+                <TransitionCollection>
+                    <PopupThemeTransition/>
+                </TransitionCollection>
+            </GridView.Transitions>
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="data:Account">
+                    <StackPanel x:Name="CodeDisplay"
+                                Orientation="Vertical"
+                                Width="296"
+                                BorderBrush="{ThemeResource SystemControlForegroundAccentBrush}"
+                                BorderThickness="4,0,0,0">    
+                        <!-- Default binding is one time, Code will be updated every 30 secs and needs OneWay binding-->
+                        <TextBlock x:Name="ShortNameBox"
+                                   Margin="12,4,12,0"
+                                   FontSize="16"
+                                   Text="{x:Bind ShortName}" />
+                        <TextBlock x:Name="AccountIdBox"
+                                   Margin="12,0,12,4"
+                                   FontSize="14"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                                   Text="{x:Bind AccId}" />
+                        <TextBlock x:Name="CodeBox"
+                                   Margin="12,0,12,4"
+                                   FontSize="24"
+                                   Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+                                   Text="{x:Bind Code, Mode=OneWay}" />
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        <ProgressRing
+            x:Name="LoadingRing"
+            Grid.Row="2"
+            Width="200"
+            Height="200"
+            Margin="{x:Bind Interval.Margin, Mode=OneWay}"
+            IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
+
+        <CommandBar x:Name="MainCommandBar" Grid.Row="3">
+            <AppBarButton
+                x:Name="AddAccountButton"
+                x:Uid="AddAccountButton"
+                Command="{x:Bind ViewModel.AddAccountCommand}"
+                Icon="Add"
+                Visibility="{x:Bind ViewModel.SelectionMode, Converter={StaticResource NoneToVisible}, Mode=OneWay}" />
+            <AppBarButton
+                x:Name="ManageAccountsButton"
+                x:Uid="ManageAccountsButton"
+                Command="{x:Bind ViewModel.ManageAccountsCommand}"
+                Icon="Bullets"
+                Visibility="{x:Bind ViewModel.SelectionMode, Converter={StaticResource NoneToVisible}, Mode=OneWay}" />
+            <AppBarButton
+                x:Name="DeleteAccountsButton"
+                x:Uid="DeleteAccountsButton"
+                Command="{x:Bind ViewModel.DeleteCommand}"
+                Icon="Delete"
+                Visibility="{x:Bind ViewModel.SelectionMode, Converter={StaticResource NoneToCollapsed}, Mode=OneWay}" />
+            <AppBarButton
+                x:Name="SelectAllButton"
+                x:Uid="SelectAllButton"
+                Click="SelectAllButton_Click"
+                Icon="SelectAll"
+                Visibility="{x:Bind ViewModel.SelectionMode, Converter={StaticResource NoneToCollapsed}, Mode=OneWay}" />
+            <AppBarButton
+                x:Name="CancelDeleteActionButton"
+                x:Uid="CancelDeleteActionButton"
+                Command="{x:Bind ViewModel.CancelCommand}"
+                Icon="Cancel"
+                Visibility="{x:Bind ViewModel.SelectionMode, Converter={StaticResource NoneToCollapsed}, Mode=OneWay}" />
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    x:Name="SettingsButton"
+                    x:Uid="SettingsButton"
+                    Command="{x:Bind ViewModel.SettingsCommand}"
+                    Icon="Setting" />
+                <AppBarButton
+                    x:Name="AboutButton"
+                    x:Uid="AboutButton"
+                    Command="{x:Bind ViewModel.AboutCommand}" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+        <Popup x:Name="PopupHints" IsLightDismissEnabled="True">
+            <Popup.Transitions>
+                <TransitionCollection>
+                    <PopupThemeTransition />
+                </TransitionCollection>
+            </Popup.Transitions>
+            <ContentControl Style="{StaticResource ButtonHintTemplate}">
+                <TextBlock x:Uid="AddAccountPopupHint" Foreground="{ThemeResource SystemControlBackgroundChromeWhiteBrush}" />
+            </ContentControl>
+        </Popup>
+    </Grid>
+</Page>
+

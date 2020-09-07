@@ -1,0 +1,96 @@
+﻿<Page
+    x:Class="TFAmvvm.Views.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TFAmvvm.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:TFAmvvm.ViewModels"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <vm:AboutPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <ContinuumNavigationTransitionInfo />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="AboutTitle"
+                   x:Uid="AboutTitle"
+                   Margin="12,4,12,12"
+                   Style="{StaticResource PageTitleTextBox}"
+                   Grid.Row="0"/>
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    Width="280"
+                    Margin="12,0">
+            <StackPanel.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition />
+                </TransitionCollection>
+            </StackPanel.Transitions>
+            <RichTextBlock IsTextSelectionEnabled="False" >
+                <Paragraph>
+                    <Span FontSize="20"
+                          Foreground="{ThemeResource SystemControlHighlightAccentBrush}">
+                        2 Factor Authenticator
+                    </Span>
+                    <LineBreak />
+                    by Dhananjay Odhekar
+                    <LineBreak />
+                    <LineBreak />
+                    Version
+                    <Run Text="{x:Bind ViewModel.Version}" />
+                    <LineBreak />
+                </Paragraph>
+                <Paragraph FontSize="13">
+                    <LineBreak />
+                    This app can generates security codes for Microsoft, Facebook, Lastpass and Google.
+                    <LineBreak />
+                    It can also be used to generate codes for other services that use RFC 6238.
+                    <LineBreak />
+                    <LineBreak />
+                    Copyright 2018 Dhananjay Odhekar.
+                    <LineBreak />
+                    All Rights Reserved.
+                    <LineBreak />
+                </Paragraph>
+                <Paragraph FontSize="13">
+                    <LineBreak />
+                    If you like this app, show your support by reviewing it.
+                </Paragraph>
+            </RichTextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="2"
+                    VerticalAlignment="Top">
+            <StackPanel.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition />
+                </TransitionCollection>
+            </StackPanel.Transitions>
+            <Button x:Name="ReviewAppButton"
+                x:Uid="ReviewAppButton"
+                Margin="12,20"
+                Command="{x:Bind ViewModel.ReviewAppCommand}" >
+                <!--<Button.Template>
+                    <StaticResource ResourceKey="AboutButtonTemplate"/>
+                </Button.Template>-->
+            </Button>
+            <HyperlinkButton x:Name="PrivacyPolicyButton"
+                             x:Uid="PrivacyPolicyButton"
+                             NavigateUri="https://github.com/odhekar/2-Factor-Authenticator/blob/master/PrivacyPolicy.md"
+                             Margin="12,20"/>
+        </StackPanel>
+    </Grid>
+</Page>
