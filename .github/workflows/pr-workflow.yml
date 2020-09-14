@@ -24,11 +24,11 @@ jobs:
       uses: NuGet/setup-nuget@v1
     - name: build-solution
       run: |
-        msbuild TFAmvvm.sln '
+        msbuild TFAmvvm.sln
           /p:Configuration=$env:BUILD_CONFIGURATION
           /p:Platform=$env:BUILD_PLATFORM
           /p:AppxBundle=Always
           /p:UapAppxPackageBuildMode=CI
           /p:AppxPackageSigningEnabled=false
           /p:PackageCertificateThumbprint=""
-          /p:PackageCertificateKeyFile=""'
+          /p:PackageCertificateKeyFile=""
