@@ -9,7 +9,6 @@ on:
     - mvvm
 
 env:
-  SOLUTION_DIR: '**/*.sln'
   BUILD_PLATFORM: 'x86|x64|ARM'
   BUILD_CONFIGURATION: 'Release'
   APPX_PACKAGE_DIR: '$(build.artifactStagingDirectory)\AppxPackages\\'
@@ -25,7 +24,8 @@ jobs:
       uses: NuGet/setup-nuget@v1
     - name: build-solution
       run: |
-        msbuild $env:SOLUTION_DIR '
+        msbuild TFAmvvm.sln '
+          /p:Configuration=$env:BUILD_CONFIGURATION
           /p:Platform=$env:BUILD_PLATFORM
           /p:AppxBundle=Always
           /p:UapAppxPackageBuildMode=CI
