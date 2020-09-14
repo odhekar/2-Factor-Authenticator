@@ -1,0 +1,34 @@
+name: Validate PR
+
+on:
+  push:
+    branches:
+    - mvvm
+  pull_request:
+    branches:
+    - mvvm
+
+env:
+  SOLUTION_DIR: '**/*.sln'
+  BUILD_PLATFORM: 'x86|x64|ARM'
+  BUILD_CONFIGURATION: 'Release'
+  APPX_PACKAGE_DIR: '$(build.artifactStagingDirectory)\AppxPackages\\'
+
+jobs:
+  build:
+    name: Build-Project
+    runs-on: windows-latest
+    steps:
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1
+    - name: setup-nuget
+      uses: NuGet/setup-nuget@v1
+    - name: build-solution
+      run: |
+        msbuild $env:SOLUTION_DIR '
+          /p:Platform=$env:BUILD_PLATFORM
+          /p:AppxBundle=Always
+          /p:UapAppxPackageBuildMode=CI
+          /p:AppxPackageSigningEnabled=false'
+          /p:PackageCertificateThumbprint=""
+          /p:PackageCertificateKeyFile=""'
