@@ -20,9 +20,9 @@ jobs:
     - name: build-solution
       run: |
         msbuild TFAmvvm.sln
-          /p:Configuration=Debug
-          /p:AppxBundle=Always
-          /p:UapAppxPackageBuildMode=CI
-          /p:AppxPackageSigningEnabled=false
-          /p:PackageCertificateThumbprint=""
-          /p:PackageCertificateKeyFile=""
+          -p:Configuration=Debug
+          -p:AppxBundle=Always
+          -p:UapAppxPackageBuildMode=CI
+          -p:AppxPackageSigningEnabled=false
+          -p:PackageCertificateThumbprint=""
+          -p:PackageCertificateKeyFile=""
