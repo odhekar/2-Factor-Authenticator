@@ -8,11 +8,6 @@ on:
     branches:
     - mvvm
 
-env:
-  BUILD_PLATFORM: 'x86|x64|ARM'
-  BUILD_CONFIGURATION: 'Release'
-  APPX_PACKAGE_DIR: '$(build.artifactStagingDirectory)\AppxPackages\\'
-
 jobs:
   build:
     name: Build-Project
@@ -25,8 +20,7 @@ jobs:
     - name: build-solution
       run: |
         msbuild TFAmvvm.sln
-          /p:Configuration=$env:BUILD_CONFIGURATION
-          /p:Platform=$env:BUILD_PLATFORM
+          /p:Configuration=Debug
           /p:AppxBundle=Always
           /p:UapAppxPackageBuildMode=CI
           /p:AppxPackageSigningEnabled=false

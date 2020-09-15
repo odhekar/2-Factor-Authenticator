@@ -1,2 +1,0 @@
-MainPackage=D:\Automation\repos\TFAmvvm\TFAmvvm\bin\x64\Release\Upload\TFAmvvm_2.4.1609.0_x64.appx
-SymbolPackage=D:\Automation\repos\TFAmvvm\TFAmvvm\AppPackages\TFAmvvm_2.4.1609.0\TFAmvvm_2.4.1609.0_x64.appxsym
