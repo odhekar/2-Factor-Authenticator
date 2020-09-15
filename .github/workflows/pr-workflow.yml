@@ -17,6 +17,8 @@ jobs:
       uses: microsoft/setup-msbuild@v1
     - name: setup-nuget
       uses: NuGet/setup-nuget@v1
+    - name: check-dir
+      run: dir
     - name: build-solution
       run: |
-        msbuild TFAmvvm.sln -p:Configuration=Debug -p:AppxBundle=Always -p:UapAppxPackageBuildMode=CI -p:AppxPackageSigningEnabled=false
+        msbuild -p:Configuration=Debug -p:AppxBundle=Always -p:UapAppxPackageBuildMode=CI -p:AppxPackageSigningEnabled=false TFAmvvm.sln
