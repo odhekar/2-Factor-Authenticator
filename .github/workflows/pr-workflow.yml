@@ -13,11 +13,12 @@ jobs:
     name: Build-Project
     runs-on: windows-latest
     steps:
+    - name: checkout-project
+      uses: actions/checkout@v2
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1
     - name: setup-nuget
       uses: NuGet/setup-nuget@v1
-    - uses: actions/checkout@v2
     - name: check-dir
       run: dir
     - name: build-solution
