@@ -8,6 +8,8 @@ on:
     branches:
     - mvvm
 
+env:
+  TFA_SOLN: TFAmvvm.sln
 jobs:
   build:
     name: Build-Project
@@ -19,8 +21,9 @@ jobs:
       uses: microsoft/setup-msbuild@v1
     - name: setup-nuget
       uses: NuGet/setup-nuget@v1
+    - run: nuget restore $env:TFA_SOLN
     - name: check-dir
       run: dir
     - name: build-solution
       run: |
-        msbuild -p:Configuration=Debug -p:AppxBundle=Always -p:UapAppxPackageBuildMode=CI -p:AppxPackageSigningEnabled=false TFAmvvm.sln
+        msbuild -p:Configuration=Debug -p:AppxBundle=Always -p:UapAppxPackageBuildMode=CI -p:AppxPackageSigningEnabled=false $env:TFA_SOLN
