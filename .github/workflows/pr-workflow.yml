@@ -1,0 +1,30 @@
+name: Validate PR
+
+on:
+  push:
+    branches:
+    - mvvm
+  pull_request:
+    branches:
+    - mvvm
+
+env:
+  TFA_SOLN: TFAmvvm.sln
+jobs:
+  build:
+    name: Build-Project
+    runs-on: windows-latest
+    steps:
+    - name: checkout-project
+      uses: actions/checkout@v2
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1
+    - name: setup-nuget
+      uses: NuGet/setup-nuget@v1
+    - name: restore-solution
+      run: nuget restore $env:TFA_SOLN
+    - name: check-dir
+      run: dir
+    - name: build-solution
+      run: |
+        msbuild -p:Configuration=Debug -p:AppxBundle=Always -p:UapAppxPackageBuildMode=CI -p:AppxPackageSigningEnabled=false $env:TFA_SOLN
