@@ -26,7 +26,7 @@ namespace TFAmvvm
             MainPage,
             AddAccountPage,
             SettingsPage,
-            AboutPage
+            AboutPage;
         }
 
         public App()

@@ -21,7 +21,8 @@ jobs:
       uses: microsoft/setup-msbuild@v1
     - name: setup-nuget
       uses: NuGet/setup-nuget@v1
-    - run: nuget restore $env:TFA_SOLN
+    - name: restore-solution
+      run: nuget restore $env:TFA_SOLN
     - name: check-dir
       run: dir
     - name: build-solution
